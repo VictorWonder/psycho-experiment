@@ -1,27 +1,32 @@
+import sys
 import argparse
 
-from psychopy.gui import Dlg
+from PyQt5.QtWidgets import QApplication, QStyleFactory
 
+from config import load_options
 from window import MyDialog, MyWindow
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--hitnum_mean', type=int,
-                        default=10,
-                        help='average number of hits')
-    parser.add_argument('--hitnum_adjust', type=int,
-                        default=5,
-                        help='adjust number of hits')
-    parser.add_argument('--trials', type=int,
-                        default=10,
-                        help='rounds of trials')
+    parser.add_argument('--config', type=str,
+                        default='./config.yml',
+                        help='path to config file')
+    parser.add_argument('-m', '--modify',
+                        action='store_true',
+                        help='change config')
     args = parser.parse_args()
+
+    # initialize PyQt5 window style
+    app = QApplication(sys.argv)
+    QApplication.setStyle(QStyleFactory.create('Fusion'))
+
+    options = load_options(args.config, args.modify)
 
     info_dialog = MyDialog(title='被试信息采集')
     user_info = info_dialog.collect_info()
 
-    main_window = MyWindow(total_trials=args.trials,
-                           hitnum_mean=args.hitnum_mean,
-                           hitnum_adjust=args.hitnum_adjust,
+    main_window = MyWindow(total_trials=options.total_trials,
+                           hitnum_mean=options.hitnum_mean,
+                           hitnum_adjust=options.hitnum_adjust,
                            user_info=user_info)
     main_window.run()
