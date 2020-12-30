@@ -1,5 +1,6 @@
-psychopy
-numpy
-wxPython
+cryptography
+macropy3
+numpy==1.19.1
 PyQt5
 pyyaml
+psychopy
