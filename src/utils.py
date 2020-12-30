@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import QMessageBox
 
-def report_error_info(self, info='Error!', end=False):
+def report_error_info(info='Error!', end=False):
     message_box = QMessageBox()
     message_box.setText(info)
     message_box.exec()
 
     if end:
-        exit()
+        exit(-1)
 
 def clean_upper_and_bottom_margins(layout):
     left, top, right, bottom = layout.getContentsMargins()

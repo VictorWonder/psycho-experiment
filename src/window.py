@@ -2,56 +2,14 @@ import random
 from typing import Dict
 
 from psychopy import visual, core, event
-from psychopy.gui import Dlg
 from psychopy.visual import Window, TextStim, ShapeStim, Rect
 
 from trial import Trial, all_trial_modes
 
 
-class MyDialog(Dlg):
-    def __init__(self, title: str = None):
-        super().__init__(title=title)
-
-        # return of addField is a QtObject
-        self.name: 'QLineEdit' = self.addField('姓名：')
-        self.age: 'QLineEdit' = self.addField('年龄：')
-        self.sex: 'QComboBox' = self.addField('性别：', choices=['男', '女'])
-        self.hand: 'QComboBox' = self.addField('惯用手：',
-                                               initial='右手',
-                                               choices=['左手', '右手'])
-
-    def collect_info(self):
-        while True:
-            self.show()
-            if self.OK:
-                ret = {}
-                ret['name'] = self.name.text()
-                try:
-                    ret['age'] = int(self.age.text().strip())
-                    if ret['age'] <= 10 or ret['age'] >= 80:
-                        raise Exception('error')
-                except:
-                    self.report_error('年龄填写出错，请重新填写')
-                    continue
-                ret['sex'] = self.sex.currentIndex()
-                ret['hand'] = self.hand.currentIndex()
-                break
-            else:
-                self.report_error('信息收集失败', end=True)
-
-    def report_error(self, message: str, end=False):
-        message_dialog = Dlg(title='Error')
-        message_dialog.addText(message)
-        message_dialog.show()
-        if end:
-            exit(-1)
-
-
 class MainWindow(Window):
     def __init__(self,
-                 total_trials: int = 10,
-                 hitnum_mean: int = 10,
-                 hitnum_adjust: int = 5,
+                 options,
                  user_info: Dict[str, int] = None
                 ):
         super().__init__(
@@ -62,9 +20,7 @@ class MainWindow(Window):
             units='deg',
         )
 
-        self.total_trials = total_trials
-        self.hitnum_mean = hitnum_mean
-        self.hitnum_adjust = hitnum_adjust
+        self.options = options
 
         self.px_size = self.scrWidthCM / self.scrWidthPIX
         self.view_distance = 40
@@ -94,13 +50,13 @@ class MainWindow(Window):
 
     def start_trials(self):
         mode_num = len(all_trial_modes)
-        for trial_round in range(self.total_trials):
+        for trial_round in range(self.options.total_trials):
             mode_idx = random.randint(0, mode_num - 1)
             trial = Trial(self,
                           self.view_distance,
                           self.px_size,
-                          self.hitnum_mean,
-                          self.hitnum_adjust,
+                          self.options.hitnum_mean,
+                          self.options.hitnum_adjust,
                           mode=all_trial_modes[mode_idx])
             trial.start()
 

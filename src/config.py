@@ -7,19 +7,17 @@ from PyQt5.QtWidgets import QDialog, QWidget, \
 
 from utils import AttrDict, report_error_info, \
         clean_upper_and_bottom_margins
+from dialog import DialogBase
 
 
-class ConfigWindow(QDialog):
+class ConfigDialog(DialogBase):
     def __init__(self, options, parent=None):
         super().__init__(parent)
         self.options = options
 
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(self.create_options())
-        main_layout.addWidget(self.create_buttons())
+        self.main_layout.insertLayout(0, self.create_options())
 
-        self.setLayout(main_layout)
-        self.setFixedSize(main_layout.sizeHint())
+        self.setFixedSize(self.main_layout.sizeHint())
         self.setWindowTitle('Configure')
 
     def create_options(self):
@@ -29,7 +27,7 @@ class ConfigWindow(QDialog):
         for key, value in self.options.items():
             label = QLabel(key)
 
-            if type(value) is int:
+            if isinstance(value, int):
                 item = QSpinBox()
                 item.setFixedWidth(100)
                 item.setValue(value)
@@ -42,32 +40,18 @@ class ConfigWindow(QDialog):
             sub_layout = QHBoxLayout()
             sub_layout.addWidget(label)
             sub_layout.addWidget(item)
+            clean_upper_and_bottom_margins(sub_layout)
             layout.addLayout(sub_layout)
             related_widgets[key] = item
 
-        clean_upper_and_bottom_margins(layout)
-
-        widget = QWidget()
-        widget.setLayout(layout)
         self.related_widgets = related_widgets
-        return widget
 
-    def create_buttons(self):
-        accept_button = QPushButton('OK', self)
-        accept_button.setFixedWidth(100)
-        accept_button.clicked.connect(self.accept_modify)
-
-        layout = QHBoxLayout()
-        layout.addWidget(accept_button)
         clean_upper_and_bottom_margins(layout)
+        return layout
 
-        widget = QWidget()
-        widget.setLayout(layout)
-        return widget
-
-    def accept_modify(self):
+    def accept_func(self):
         for key, item in self.related_widgets.items():
-            if type(self.options[key]) is int:
+            if isinstance(self.options[key], int):
                 self.options[key] = item.value()
         self.accept()
 
@@ -79,8 +63,8 @@ def load_options(path: str,
 
     options = yaml.safe_load(open(path))
     if modify:
-        config_window = ConfigWindow(options)
-        config_window.exec()
+        config_dialog = ConfigDialog(options)
+        config_dialog.exec()
         yaml.safe_dump(options, open(path, 'w'), sort_keys=False)
 
     return AttrDict(options)

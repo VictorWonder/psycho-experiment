@@ -4,6 +4,7 @@ import argparse
 from PyQt5.QtWidgets import QApplication, QStyleFactory
 
 from config import load_options
+from user import obtain_user_info
 from window import MainWindow
 
 if __name__ == '__main__':
@@ -23,8 +24,8 @@ if __name__ == '__main__':
     # load options
     options = load_options(args.config, args.modify)
 
-    info_dialog = MyDialog(title='被试信息采集')
-    user_info = info_dialog.collect_info()
+    # obtain user info
+    user_info = obtain_user_info()
 
     main_window = MainWindow(options=options,
                              user_info=user_info)
