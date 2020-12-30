@@ -47,7 +47,7 @@ class MyDialog(Dlg):
             exit(-1)
 
 
-class MyWindow(Window):
+class MainWindow(Window):
     def __init__(self,
                  total_trials: int = 10,
                  hitnum_mean: int = 10,

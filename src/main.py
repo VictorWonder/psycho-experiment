@@ -4,7 +4,7 @@ import argparse
 from PyQt5.QtWidgets import QApplication, QStyleFactory
 
 from config import load_options
-from window import MyDialog, MyWindow
+from window import MainWindow
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -20,13 +20,12 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     QApplication.setStyle(QStyleFactory.create('Fusion'))
 
+    # load options
     options = load_options(args.config, args.modify)
 
     info_dialog = MyDialog(title='被试信息采集')
     user_info = info_dialog.collect_info()
 
-    main_window = MyWindow(total_trials=options.total_trials,
-                           hitnum_mean=options.hitnum_mean,
-                           hitnum_adjust=options.hitnum_adjust,
-                           user_info=user_info)
+    main_window = MainWindow(options=options,
+                             user_info=user_info)
     main_window.run()
