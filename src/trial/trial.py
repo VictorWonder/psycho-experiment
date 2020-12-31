@@ -9,6 +9,7 @@ from psychopy.visual import Rect
 
 all_trial_modes = ['constant', 'random']
 
+
 class Point(object):
     def __init__(self,
                  win,

@@ -4,7 +4,7 @@ from typing import Dict
 from psychopy import visual, core, event
 from psychopy.visual import Window, TextStim, ShapeStim, Rect
 
-from trial import Trial, all_trial_modes
+from trial.trial import Trial, all_trial_modes
 
 
 class MainWindow(Window):

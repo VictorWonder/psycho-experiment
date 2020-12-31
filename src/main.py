@@ -3,9 +3,9 @@ import argparse
 
 from PyQt5.QtWidgets import QApplication, QStyleFactory
 
-from config import load_options
-from user import obtain_user_info
-from window import MainWindow
+from trial.config import load_options
+from trial.user import obtain_user_info
+from trial.window import MainWindow
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

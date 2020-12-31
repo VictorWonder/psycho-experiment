@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QDialog, QWidget, \
         QVBoxLayout, QHBoxLayout, \
         QLabel, QComboBox, QLineEdit, QSpinBox
 
-from utils import report_error_info
-from dialog import DialogBase
+from utils.common import report_error_info
+from base.dialog import DialogBase
 
 
 class UserDialog(DialogBase):

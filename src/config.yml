@@ -1,3 +1,28 @@
-total_trials: 15
-hitnum_mean: 10
-hitnum_adjust: 5
+total_trials:
+    name: 实验次数
+    value: 10
+    range:
+    - 1
+    - 20
+    unit: null
+hitnum_mean:
+    name: 平均点击次数
+    value: 20
+    range:
+    - 1
+    - 50
+    unit: null
+hitnum_adjust:
+    name: 浮动点击次数
+    value: 5
+    range:
+    - 1
+    - 50
+    unit: null
+view_distance:
+    name: 视距
+    value: 20
+    range:
+    - 10
+    - 50
+    unit: cm
