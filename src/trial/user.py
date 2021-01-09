@@ -73,6 +73,10 @@ class UserDialog(DialogBase):
                                        '惯用手：',
                                        default='右手',
                                        choices=['左手', '右手']))
+        layout.addLayout(self.new_item('view_distance',
+                                       '视距 (cm)：',
+                                       default=40,
+                                       value_range=[20, 60]))
         return layout
 
     def accept_func(self):

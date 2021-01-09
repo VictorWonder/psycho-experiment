@@ -20,6 +20,11 @@ if __name__ == '__main__':
     # initialize PyQt5 window style
     app = QApplication(sys.argv)
     QApplication.setStyle(QStyleFactory.create('Fusion'))
+    # obtain screen property
+    # TODO: obtain gamma value
+    screen = app.primaryScreen()
+    physical_size = screen.physicalSize()
+    pixel_size = screen.size()
 
     # load options
     options = load_options(args.config, args.modify)
@@ -28,5 +33,9 @@ if __name__ == '__main__':
     user_info = obtain_user_info()
 
     main_window = MainWindow(options=options,
+                             pixel_size=(pixel_size.width(),
+                                         pixel_size.height()),
+                             physical_size=(physical_size.width(),
+                                            physical_size.height()),
                              user_info=user_info)
     main_window.run()

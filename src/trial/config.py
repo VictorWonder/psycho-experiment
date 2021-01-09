@@ -41,6 +41,10 @@ class ConfigDialog(DialogBase):
                     min_value = 1
                     max_value = 50
                 widget.setRange(min_value, max_value)
+            elif isinstance(value, float):
+                widget = QLineEdit()
+                widget.setFixedWidth(100)
+                widget.setText(str(value))
             else:
                 raise Exception("unavailable option type" 
                                 " '{}'".format(type(value)))
@@ -68,6 +72,8 @@ class ConfigDialog(DialogBase):
         for key, widget in self.related_widgets.items():
             if isinstance(self.config[key]['value'], int):
                 self.config[key]['value'] = widget.value()
+            elif isinstance(self.config[key]['value'], float):
+                self.config[key]['value'] = float(widget.text())
         self.accept()
 
 
