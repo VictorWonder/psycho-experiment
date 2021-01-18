@@ -7,25 +7,25 @@ total_trials:
     unit: null
 hitnum_mean:
     name: 平均点击次数
-    value: 5
+    value: 10
     range:
     - 1
     - 50
     unit: null
 hitnum_adjust:
     name: 浮动点击次数
-    value: 3
+    value: 5
     range:
     - 1
     - 50
     unit: null
 angle_mean:
     name: 平均角度
-    value: 5.0
+    value: 10.0
     unit: 度
 angle_var:
     name: 浮动角度
-    value: 6.0
+    value: 12.0
     unit: 度
 angle_init:
     name: 初始角度调整
@@ -33,14 +33,14 @@ angle_init:
     unit: 度
 time_mean:
     name: 平均反馈时间
-    value: 400
+    value: 100
     range:
     - 100
     - 1000
     unit: msec
 time_var:
     name: 浮动反馈时间
-    value: 300
+    value: 100
     range:
     - 100
     - 500

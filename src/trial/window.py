@@ -43,11 +43,13 @@ class MainWindow(Window):
         self.view_distance = user_info['view_distance']
 
         self.scale = RatingScale(self,
-                                 scale='选择分数之后请按“空格键”确认\n'
-                                       '0=无法控制\t\t\t\t10=完全控制',
-                                 labels=(0, 5, 10),
+                                 scale='选择分数之后请按“空格键”确认',
                                  low=0,
-                                 high=10,
+                                 high=1000,
+                                 tickMarks=[0, 1000],
+                                 labels=('无法控制', '完全控制'),
+                                 leftKeys=None,
+                                 rightKeys=None,
                                  acceptKeys='space',
                                  showAccept=False,
                                  pos=(0.0, 0.0))

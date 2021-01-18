@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from psychopy import event, core, visual
-from psychopy.visual import Rect, RatingScale
+from psychopy.visual import Rect, Circle, RatingScale
 from psychopy.core import Clock
 
 
@@ -16,7 +16,7 @@ class Point(object):
     def __init__(self,
                  win,
                  pos,
-                 shape_type = 'rectangle',
+                 shape_type = 'circle',
                  size = None,
                  color = 'black',
                 ):
@@ -25,7 +25,7 @@ class Point(object):
 
         if shape_type == 'rectangle':
             if size is None:
-                self.size = (10, 10)
+                self.size = (32, 32)
             else:
                 self.size = size
             self.stim = Rect(win=win,
@@ -34,6 +34,17 @@ class Point(object):
                              pos=(self.x, self.y),
                              lineColor=color,
                              fillColor=color)
+        elif shape_type == 'circle':
+            if size is None:
+                self.size = 32
+            else:
+                self.size = size
+            self.stim = Circle(win=win,
+                               units='pix',
+                               size=self.size,
+                               pos=(self.x, self.y),
+                               lineColor=color,
+                               fillColor=color)
         else:
             raise Exception('unavilable shape of point')
 
